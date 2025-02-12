@@ -1,9 +1,9 @@
 --[[
 Title: Favourite Child
 Author: Wobin
-Date: 06/02/2025
+Date: 12/02/2025
 Repository: https://github.com/Wobin/FavouriteChild
-Version: 1.0.1
+Version: 1.1
 --]]
 
 
@@ -14,7 +14,7 @@ local star_icon = "content/ui/materials/icons/presets/preset_15"
 local firstTime = false
 local table = table
 
-mod.version = "1.0.1"
+mod.version = "1.1"
 
 local favourite_button_def = {  
 		alignment = "right_alignment",
@@ -22,6 +22,7 @@ local favourite_button_def = {
 		input_action = "hotkey_item_favorite",
 		on_pressed_callback = "_on_favourite_selected_character_pressed",
 		visibility_function = function (parent, id)   
+         if not parent or not parent._selected_profile then return false end
          local _, entry = table.find_by_key(parent._input_legend_element._entries, "input_action", "hotkey_item_favorite")
          parent._input_legend_element:set_display_name( entry.id, currentFaves[parent._selected_profile.character_id] and "loc_inventory_remove_favorite" or "loc_inventory_add_favorite")
         return not parent._is_main_menu_open and parent._character_details_active           
@@ -71,6 +72,12 @@ end)
 
 mod.on_all_mods_loaded = function()
   mod:info(mod.version)
+  if not CLASS.MainMenuView then 
+    Promise.delay(10):next(function() 
+            mod.on_all_mods_loaded()
+            return
+        end)
+  end
   CLASS.MainMenuView._on_favourite_selected_character_pressed = function(self)
     if not self or not self._selected_profile or not self._selected_profile.character_id then return end
     currentFaves[self._selected_profile.character_id] = not currentFaves[self._selected_profile.character_id]    
