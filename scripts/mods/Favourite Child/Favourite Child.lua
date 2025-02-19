@@ -1,9 +1,9 @@
 --[[
 Title: Favourite Child
 Author: Wobin
-Date: 12/02/2025
+Date: 19/02/2025
 Repository: https://github.com/Wobin/FavouriteChild
-Version: 1.1
+Version: 1.1.1
 --]]
 
 
@@ -14,7 +14,7 @@ local star_icon = "content/ui/materials/icons/presets/preset_15"
 local firstTime = false
 local table = table
 
-mod.version = "1.1"
+mod.version = "1.1.1"
 
 local favourite_button_def = {  
 		alignment = "right_alignment",
@@ -72,15 +72,16 @@ end)
 
 mod.on_all_mods_loaded = function()
   mod:info(mod.version)
-  if not CLASS.MainMenuView then 
+  if type(CLASS.MainMenuView) ~= "table" then 
     Promise.delay(10):next(function() 
             mod.on_all_mods_loaded()
             return
-        end)
+        end)    
+  else
+    CLASS.MainMenuView._on_favourite_selected_character_pressed = function(self)
+      if not self or not self._selected_profile or not self._selected_profile.character_id then return end
+      currentFaves[self._selected_profile.character_id] = not currentFaves[self._selected_profile.character_id]    
+      mod:set("favourite_child_info", currentFaves, false)
+    end  
   end
-  CLASS.MainMenuView._on_favourite_selected_character_pressed = function(self)
-    if not self or not self._selected_profile or not self._selected_profile.character_id then return end
-    currentFaves[self._selected_profile.character_id] = not currentFaves[self._selected_profile.character_id]    
-    mod:set("favourite_child_info", currentFaves, false)
-  end  
 end
