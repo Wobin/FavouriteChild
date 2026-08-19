@@ -8,5 +8,7 @@ return {
 			mod_localization = "Favourite Child/scripts/mods/Favourite Child/Favourite Child_localization",
 		})
 	end,
-	packages = {},
+	packages = {
+		"packages/ui/views/inventory_background_view/inventory_background_view",
+	},
 }

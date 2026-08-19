@@ -1,9 +1,8 @@
 --[[
 Title: Favourite Child
 Author: Wobin
-Date: 08/07/2026
+Date: 20/08/2026
 Repository: https://github.com/Wobin/FavouriteChild
-Version: 1.2.1
 --]]
 
 
@@ -13,7 +12,7 @@ local currentFaves = mod:get("favourite_child_info") or {}
 local star_icon = "content/ui/materials/icons/presets/preset_15"
 local table = table
 
-mod.version = "1.2.1"
+mod.version = mod.get_metadata and mod:get_metadata("version") or "unknown"
 
 local function find_by_key(t, search_key, search_value)
   if type(t) ~= "table" then return nil end
@@ -83,11 +82,8 @@ mod:hook_require("scripts/ui/pass_templates/character_select_pass_templates", fu
     end
 end)
 
-local package_name = "packages/ui/views/inventory_background_view/inventory_background_view"
-
 mod.on_all_mods_loaded = function()
   mod:info(mod.version)
-  Managers.package:load(package_name, "Favourite Child")
   if type(CLASS.MainMenuView) ~= "table" then 
     Promise.delay(10):next(function()
             mod.on_all_mods_loaded()

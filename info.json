@@ -1,0 +1,17 @@
+{
+	"name": "Favourite Child",
+	"description": "Allows you to set characters as undeletable",
+	"version": "1.2.2",
+	"author": "Wobin",
+	"homepage": "https://www.nexusmods.com/warhammer40kdarktide/mods/467",
+	"source": "https://github.com/Wobin/FavouriteChild",
+	"funding": {
+		"kofi": "https://ko-fi.com/wobin_dwonderdog"
+	},
+	"nexusId": "467",
+	"order": {
+		"require": [],
+		"this_after": [],
+		"this_before": []
+	}
+}
